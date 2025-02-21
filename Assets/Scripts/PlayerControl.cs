@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody>();
         inputManager.OnSpacePressed.AddListener(PlayerJump);
-        inputManager.OnMove.AddListener(PlayerMove);  // Subscribe to movement event
+        inputManager.OnMove.AddListener(MovePlayer);  // Subscribe to movement event
 
         // Calculate the jump force based on the desired jump height
         jumpForce = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * jumpHeight);
@@ -34,10 +34,9 @@ public class PlayerControl : MonoBehaviour
 
     private void PlayerJump()
     {
-        // Allow jumping only if jump count is less than the max jumps
-        if (jumpCount < maxJumps)
+        if (jumpCount < maxJumps) // Check if the player can jump
         {
-            // Allow second jump only if first jump has completed (when velocity.y <= 0)
+            // Allow second jump only if the first jump has completed (when velocity.y <= 0)
             if (jumpCount == 0 || (jumpCount == 1 && playerRB.linearVelocity.y <= 0f))
             {
                 // Reset vertical velocity before jumping to ensure consistent height
@@ -48,9 +47,10 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void PlayerMove(Vector3 direction)
+    private void MovePlayer(Vector3 direction)
     {
-            Vector3 movement = direction * moveSpeed * Time.deltaTime;
-            transform.Translate(movement);
+        // Apply movement in the X and Z direction without affecting vertical velocity
+        Vector3 movement = direction * moveSpeed * Time.deltaTime;
+        transform.Translate(movement);
     }
 }
