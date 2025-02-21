@@ -12,8 +12,8 @@ public class PlayerControl : MonoBehaviour
     private float jumpForce; // Calculated based on desired jump height
 
     [SerializeField] private float dashSpeed = 10f;   // Dash speed
-    [SerializeField] private float dashCooldown = 3f; // Dash cooldown
-    private float lastDashTime = -3f; // last Dash time
+    [SerializeField] private float dashCooldown = 5f; // Dash cooldown
+    private float lastDashTime = -5f; // last Dash time
     private bool isDashing = false;
     private Vector3 currentMoveDirection;
     [SerializeField] private MoveIndicator moveIndicator;  // Reference to MoveIndicator script
