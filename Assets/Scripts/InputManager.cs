@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,9 +7,27 @@ public class InputManager : MonoBehaviour
     public UnityEvent<Vector3> OnMove = new UnityEvent<Vector3>();  // Event to pass movement direction
     public UnityEvent OnSpacePressed = new UnityEvent();
 
+    public static InputManager Instance;
+    private int score = 0;
+    public TextMeshProUGUI scoreText;
+
     [SerializeField] private MoveIndicator moveIndicator;  // Reference to MoveIndicator script
 
-    void Start() { }
+    void Start() {
+        UpdateScoreUI();
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
@@ -28,5 +47,18 @@ public class InputManager : MonoBehaviour
         movementDirection = moveIndicator.GetMovementDirection(movementDirection);
 
         OnMove?.Invoke(movementDirection);  // Pass movement direction to PlayerControl
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        UpdateScoreUI();
+    }
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score:" + score;
+        }
     }
 }

@@ -30,6 +30,11 @@ public class PlayerControl : MonoBehaviour
             jumpCount = 0;
             canDoubleJump = true; // Allow second jump when on the ground
         }
+        
+        if (other.gameObject.tag == "Coin")
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     private void PlayerJump()
@@ -53,4 +58,5 @@ public class PlayerControl : MonoBehaviour
         Vector3 movement = direction * moveSpeed * Time.deltaTime;
         transform.Translate(movement);
     }
+
 }
